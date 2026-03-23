@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet Beans | Where Every Sip Feels Like Velvet</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+    <div class="logo-container" style="display: flex; flex-direction: column; align-items: flex-start;">
+        <div class="logo">Velvet <span>Beans</span></div>
+        <small style="color: var(--secondary); font-size: 0.75rem; font-style: italic; margin-top: -5px; opacity: 0.9;">
+            by Pranjal Jha
+        </small>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </li>
+    </ul>
+</nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Where Every Sip Feels Like Velvet</h1>
+            <p>Experience the richness of premium hand-picked beans in a cozy, modern atmosphere.</p>
+            <a href="#menu" class="btn">Order Now</a>
+        </div>
+    </section>
+
+    <section class="quotes">
+        <div class="quote-card">"Coffee is a hug in a mug."</div>
+        <div class="quote-card">"Life begins after coffee."</div>
+    </section>
+
+    <section id="menu" class="menu">
+        <h2 class="section-title">Our Menu</h2>
+        
+        <h3>Beverages (Coffee & Tea)</h3>
+        <div class="menu-grid" id="beverages-grid"></div>
+
+        <h3>Juices & Cold Drinks</h3>
+        <div class="menu-grid" id="juices-grid"></div>
+
+        <h3>Snacks & Treats</h3>
+        <div class="menu-grid" id="snacks-grid"></div>
+    </section>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+            <h3>Total: $<span id="cart-total">0.00</span></h3>
+            <button class="btn checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <section id="about" class="about">
+        <div class="about-container">
+            <h2>About Velvet Beans</h2>
+            <p>Born from a passion for the perfect roast, Velvet Beans is a sanctuary for coffee lovers. We source our beans ethically and brew them with precision to ensure that every cup is a masterpiece of flavor and texture.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> velvetbeans@email.com</p>
+                <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Coffee Lane, Brew City</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5"></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Velvet Beans Café. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
