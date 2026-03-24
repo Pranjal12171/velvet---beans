@@ -1,41 +1,38 @@
 /* ==========================================
-   VELVET BEANS - MAIN JAVASCRIPT
+   VELVET BEANS - MAIN JAVASCRIPT (LOCAL IMAGES)
    ========================================== */
 
-// STEP 1: Define the Menu Data
-// Updated with ultra-reliable, theme-matching image links to bypass external blocking.
+// STEP 1: Define the Menu Data using Local Images
 const menuData = {
     beverages: [
-        { id: 1, name: 'Cappuccino', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Cappuccino' },
-        { id: 2, name: 'Latte', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Latte' }, 
-        { id: 9, name: 'Macchiato', price: 3.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Macchiato' },
-        { id: 10, name: 'Frappuccino', price: 5.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Frappuccino' },
-        { id: 11, name: 'Black Tea', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Black+Tea' },
-        { id: 12, name: 'Lemon Tea', price: 3.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Lemon+Tea' },
-        { id: 13, name: 'Matcha Tea', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Matcha+Tea' },
-        { id: 14, name: 'Green Tea', price: 3.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Green+Tea' }
+        { id: 1, name: 'Cappuccino', price: 4.5, img: 'images/cappuccino.jpg' },
+        { id: 2, name: 'Latte', price: 4.0, img: 'images/latte.jpg' }, 
+        { id: 9, name: 'Macchiato', price: 3.5, img: 'images/macchiato.jpg' },
+        { id: 10, name: 'Frappuccino', price: 5.5, img: 'images/frappuccino.jpg' },
+        { id: 11, name: 'Black Tea', price: 2.5, img: 'images/black-tea.jpg' },
+        { id: 12, name: 'Lemon Tea', price: 3.0, img: 'images/lemon-tea.jpg' },
+        { id: 13, name: 'Matcha Tea', price: 4.5, img: 'images/matcha-tea.jpg' },
+        { id: 14, name: 'Green Tea', price: 3.0, img: 'images/green-tea.jpg' }
     ],
     juices: [
-        { id: 15, name: 'Fresh Orange Juice', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Orange+Juice' },
-        { id: 16, name: 'Iced Watermelon', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Iced+Watermelon' },
-        { id: 17, name: 'Blueberry Mojito', price: 5.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Blueberry+Mojito' },
-        { id: 18, name: 'Classic Cola', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Classic+Cola' }
+        { id: 15, name: 'Fresh Orange Juice', price: 4.0, img: 'images/fresh-orange-juice.jpg' },
+        { id: 16, name: 'Iced Watermelon', price: 4.5, img: 'images/iced-watermelon.jpg' },
+        { id: 17, name: 'Blueberry Mojito', price: 5.0, img: 'images/blueberry-mojito.jpg' },
+        { id: 18, name: 'Classic Cola', price: 2.5, img: 'images/classic-cola.jpg' }
     ],
     snacks: [
-        { id: 5, name: 'Croissant', price: 3.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Croissant' },
-        { id: 6, name: 'Club Sandwich', price: 6.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Club+Sandwich' },
-        { id: 7, name: 'Fudge Brownie', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Fudge+Brownie' },
-        { id: 8, name: 'Choco-Chip Cookies', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Choco-Chip+Cookies' },
-        { id: 19, name: 'Blueberry Muffin', price: 3.8, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Blueberry+Muffin' },
-        { id: 20, name: 'Avocado Toast', price: 7.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Avocado+Toast' },
-        { id: 21, name: 'Cheese Cake', price: 5.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Cheese+Cake' }
+        { id: 5, name: 'Croissant', price: 3.5, img: 'images/croissant.jpg' },
+        { id: 6, name: 'Club Sandwich', price: 6.5, img: 'images/club-sandwich.jpg' },
+        { id: 7, name: 'Fudge Brownie', price: 4.0, img: 'images/fudge-brownie.jpg' },
+        { id: 8, name: 'Choco-Chip Cookies', price: 2.5, img: 'images/choco-chip-cookies.jpg' },
+        { id: 19, name: 'Blueberry Muffin', price: 3.8, img: 'images/blueberry-muffin.jpg' },
+        { id: 20, name: 'Avocado Toast', price: 7.5, img: 'images/avocado-toast.jpg' },
+        { id: 21, name: 'Cheese Cake', price: 5.5, img: 'images/cheese-cake.jpg' }
     ]
 };
 
-// STEP 2: Initialize the Cart
 let cart = [];
 
-// STEP 3: Display Menu Items on the Webpage
 function displayMenu() {
     const bevGrid = document.getElementById('beverages-grid');
     const snackGrid = document.getElementById('snacks-grid');
@@ -50,13 +47,13 @@ function displayMenu() {
     menuData.snacks.forEach(item => snackGrid.innerHTML += createProductCard(item));
 }
 
-// Helper Function for Step 3: Generates the HTML for a single product card
+// Updated onerror to look for a generic local placeholder if a specific image is missing
 function createProductCard(item) {
     return `
         <div class="menu-item">
             <img src="${item.img}" 
                  alt="${item.name}" 
-                 onerror="this.src='https://placehold.co/500x400/3d2b1f/faedcd?text=Image+Unavailable'">
+                 onerror="this.src='images/placeholder.jpg'">
             <h4>${item.name}</h4>
             <p>$${item.price.toFixed(2)}</p>
             <button class="btn" onclick="addToCart(${item.id})">Add to Cart</button>
@@ -64,7 +61,6 @@ function createProductCard(item) {
     `;
 }
 
-// STEP 4: Add to Cart Logic
 function addToCart(id) {
     const allProducts = [...menuData.beverages, ...menuData.juices, ...menuData.snacks];
     const product = allProducts.find(p => p.id === id);
@@ -80,7 +76,6 @@ function addToCart(id) {
     updateCartUI(); 
 }
 
-// STEP 5: Update the Cart User Interface
 function updateCartUI() {
     const cartItems = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
@@ -108,18 +103,15 @@ function updateCartUI() {
     cartTotal.innerText = total.toFixed(2);
 }
 
-// Helper Function for Step 5: Removes an item from the cart
 function removeFromCart(id) {
     cart = cart.filter(item => item.id !== id);
     updateCartUI();
 }
 
-// Helper Function for Step 5: Opens/Closes the Cart Sidebar
 function toggleCart() {
     document.getElementById('cart-sidebar').classList.toggle('active');
 }
 
-// STEP 6: Handle Checkout and Contact Form Submissions
 document.querySelector('.checkout-btn').addEventListener('click', () => {
     if (cart.length === 0) {
         alert("Your cart is empty!");
@@ -137,5 +129,4 @@ document.querySelector('.contact-form').addEventListener('submit', (e) => {
     e.target.reset(); 
 });
 
-// STEP 7: Run the Website
 window.onload = displayMenu;
