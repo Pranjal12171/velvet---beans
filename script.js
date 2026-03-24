@@ -2,22 +2,22 @@
    VELVET BEANS - SUPABASE BACKEND VERSION
    ========================================== */
 
-// 1. Initialize Supabase
-const SUBAPASE_URL = 'https://myvdmdmyvaznrywvqhiz.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15dmRtZG15dmF6bnJ5d3ZxaGl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzQzOTMsImV4cCI6MjA4OTkxMDM5M30.hG2fib_b3KaV4wSnUGp9uTe7k-eP30cFF0o1bfKGIf4';
-const supabase = supabase.createClient(SUBAPASE_URL, SUPABASE_KEY);
+// 1. Initialize Supabase (Use a unique name to avoid naming conflicts)
+const SUBAPASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const supabaseClient = supabase.createClient(SUBAPASE_URL, SUPABASE_KEY);
 
 let cart = [];
-let allProducts = []; // To store items fetched from DB
+let allProducts = []; 
 
-// 2. Fetch Menu Data from Supabase
+// 2. Fetch Menu Data from Supabase Table
 async function displayMenu() {
     const bevGrid = document.getElementById('beverages-grid');
     const snackGrid = document.getElementById('snacks-grid');
     const juiceGrid = document.getElementById('juices-grid');
 
-    // Fetch data from PostgreSQL
-    const { data: menuItems, error } = await supabase
+    // Fetch all columns from your 'menu_items' table
+    const { data: menuItems, error } = await supabaseClient
         .from('menu_items')
         .select('*');
 
@@ -26,13 +26,15 @@ async function displayMenu() {
         return;
     }
 
-    allProducts = menuItems; // Store for cart logic
+    // Save fetched items for cart logic
+    allProducts = menuItems; 
 
-    // Clear and Fill Grids
+    // Clear existing content before rendering
     if(bevGrid) bevGrid.innerHTML = '';
     if(snackGrid) snackGrid.innerHTML = '';
     if(juiceGrid) juiceGrid.innerHTML = '';
 
+    // Sort items into their respective HTML grids by category
     menuItems.forEach(item => {
         const card = createProductCard(item);
         if (item.category === 'beverages') bevGrid.innerHTML += card;
@@ -41,11 +43,13 @@ async function displayMenu() {
     });
 }
 
-// 3. Helper: Create Product Card
+// 3. Helper: Generate HTML for product cards
 function createProductCard(item) {
     return `
         <div class="menu-item">
-            <img src="${item.img}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500'">
+            <img src="${item.img}" 
+                 alt="${item.name}" 
+                 onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500'">
             <h4>${item.name}</h4>
             <p>$${parseFloat(item.price).toFixed(2)}</p>
             <button class="btn" onclick="addToCart(${item.id})">Add to Cart</button>
@@ -53,7 +57,7 @@ function createProductCard(item) {
     `;
 }
 
-// 4. Cart Logic (Remains Local for performance, using DB IDs)
+// 4. Cart Logic (Remains local, but uses database IDs)
 function addToCart(id) {
     const product = allProducts.find(p => p.id === id);
     if (!product) return;
@@ -103,23 +107,23 @@ function toggleCart() {
     document.getElementById('cart-sidebar').classList.toggle('active');
 }
 
-// 5. Submit Orders/Contact to Supabase (Optional)
+// 5. Form & Event Listeners
 document.querySelector('.checkout-btn').addEventListener('click', () => {
     if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
     }
-    // In a real app, you'd insert the order into an 'orders' table here
-    alert("Order Placed Successfully!");
+    alert("Order Placed Successfully! Thank you for choosing Velvet Beans.");
     cart = [];
     updateCartUI();
     toggleCart();
 });
 
-document.querySelector('.contact-form').addEventListener('submit', async (e) => {
+document.querySelector('.contact-form').addEventListener('submit', (e) => {
     e.preventDefault();
     alert('Thank you for reaching out!');
     e.target.reset();
 });
 
+// Run displayMenu on load
 window.onload = displayMenu;
