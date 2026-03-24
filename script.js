@@ -1,65 +1,74 @@
 /* ==========================================
-   VELVET BEANS - SUPABASE BACKEND VERSION
+   VELVET BEANS - MAIN JAVASCRIPT
    ========================================== */
 
-// 1. Initialize Supabase (Use a unique name to avoid naming conflicts)
-const SUBAPASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
-const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
-const supabaseClient = supabase.createClient(SUBAPASE_URL, SUPABASE_KEY);
+// STEP 1: Define the Menu Data
+// Updated with ultra-reliable, theme-matching image links to bypass external blocking.
+const menuData = {
+    beverages: [
+        { id: 1, name: 'Cappuccino', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Cappuccino' },
+        { id: 2, name: 'Latte', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Latte' }, 
+        { id: 9, name: 'Macchiato', price: 3.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Macchiato' },
+        { id: 10, name: 'Frappuccino', price: 5.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Frappuccino' },
+        { id: 11, name: 'Black Tea', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Black+Tea' },
+        { id: 12, name: 'Lemon Tea', price: 3.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Lemon+Tea' },
+        { id: 13, name: 'Matcha Tea', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Matcha+Tea' },
+        { id: 14, name: 'Green Tea', price: 3.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Green+Tea' }
+    ],
+    juices: [
+        { id: 15, name: 'Fresh Orange Juice', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Orange+Juice' },
+        { id: 16, name: 'Iced Watermelon', price: 4.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Iced+Watermelon' },
+        { id: 17, name: 'Blueberry Mojito', price: 5.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Blueberry+Mojito' },
+        { id: 18, name: 'Classic Cola', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Classic+Cola' }
+    ],
+    snacks: [
+        { id: 5, name: 'Croissant', price: 3.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Croissant' },
+        { id: 6, name: 'Club Sandwich', price: 6.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Club+Sandwich' },
+        { id: 7, name: 'Fudge Brownie', price: 4.0, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Fudge+Brownie' },
+        { id: 8, name: 'Choco-Chip Cookies', price: 2.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Choco-Chip+Cookies' },
+        { id: 19, name: 'Blueberry Muffin', price: 3.8, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Blueberry+Muffin' },
+        { id: 20, name: 'Avocado Toast', price: 7.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Avocado+Toast' },
+        { id: 21, name: 'Cheese Cake', price: 5.5, img: 'https://placehold.co/500x400/d4a373/3d2b1f?text=Cheese+Cake' }
+    ]
+};
 
+// STEP 2: Initialize the Cart
 let cart = [];
-let allProducts = []; 
 
-// 2. Fetch Menu Data from Supabase Table
-async function displayMenu() {
+// STEP 3: Display Menu Items on the Webpage
+function displayMenu() {
     const bevGrid = document.getElementById('beverages-grid');
     const snackGrid = document.getElementById('snacks-grid');
     const juiceGrid = document.getElementById('juices-grid');
 
-    // Fetch all columns from your 'menu_items' table
-    const { data: menuItems, error } = await supabaseClient
-        .from('menu_items')
-        .select('*');
-
-    if (error) {
-        console.error('Error fetching menu:', error);
-        return;
-    }
-
-    // Save fetched items for cart logic
-    allProducts = menuItems; 
-
-    // Clear existing content before rendering
     if(bevGrid) bevGrid.innerHTML = '';
     if(snackGrid) snackGrid.innerHTML = '';
     if(juiceGrid) juiceGrid.innerHTML = '';
 
-    // Sort items into their respective HTML grids by category
-    menuItems.forEach(item => {
-        const card = createProductCard(item);
-        if (item.category === 'beverages') bevGrid.innerHTML += card;
-        else if (item.category === 'juices') juiceGrid.innerHTML += card;
-        else if (item.category === 'snacks') snackGrid.innerHTML += card;
-    });
+    menuData.beverages.forEach(item => bevGrid.innerHTML += createProductCard(item));
+    menuData.juices.forEach(item => juiceGrid.innerHTML += createProductCard(item));
+    menuData.snacks.forEach(item => snackGrid.innerHTML += createProductCard(item));
 }
 
-// 3. Helper: Generate HTML for product cards
+// Helper Function for Step 3: Generates the HTML for a single product card
 function createProductCard(item) {
     return `
         <div class="menu-item">
             <img src="${item.img}" 
                  alt="${item.name}" 
-                 onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500'">
+                 onerror="this.src='https://placehold.co/500x400/3d2b1f/faedcd?text=Image+Unavailable'">
             <h4>${item.name}</h4>
-            <p>$${parseFloat(item.price).toFixed(2)}</p>
+            <p>$${item.price.toFixed(2)}</p>
             <button class="btn" onclick="addToCart(${item.id})">Add to Cart</button>
         </div>
     `;
 }
 
-// 4. Cart Logic (Remains local, but uses database IDs)
+// STEP 4: Add to Cart Logic
 function addToCart(id) {
+    const allProducts = [...menuData.beverages, ...menuData.juices, ...menuData.snacks];
     const product = allProducts.find(p => p.id === id);
+    
     if (!product) return;
 
     const existing = cart.find(item => item.id === id);
@@ -68,9 +77,10 @@ function addToCart(id) {
     } else {
         cart.push({ ...product, quantity: 1 });
     }
-    updateCartUI();
+    updateCartUI(); 
 }
 
+// STEP 5: Update the Cart User Interface
 function updateCartUI() {
     const cartItems = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
@@ -98,16 +108,18 @@ function updateCartUI() {
     cartTotal.innerText = total.toFixed(2);
 }
 
+// Helper Function for Step 5: Removes an item from the cart
 function removeFromCart(id) {
     cart = cart.filter(item => item.id !== id);
     updateCartUI();
 }
 
+// Helper Function for Step 5: Opens/Closes the Cart Sidebar
 function toggleCart() {
     document.getElementById('cart-sidebar').classList.toggle('active');
 }
 
-// 5. Form & Event Listeners
+// STEP 6: Handle Checkout and Contact Form Submissions
 document.querySelector('.checkout-btn').addEventListener('click', () => {
     if (cart.length === 0) {
         alert("Your cart is empty!");
@@ -121,9 +133,9 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
 
 document.querySelector('.contact-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Thank you for reaching out!');
-    e.target.reset();
+    alert('Thank you for reaching out to Velvet Beans! We will get back to you soon.');
+    e.target.reset(); 
 });
 
-// Run displayMenu on load
+// STEP 7: Run the Website
 window.onload = displayMenu;
