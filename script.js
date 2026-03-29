@@ -155,8 +155,42 @@ document.querySelector('.checkout-btn').addEventListener('click', async () => {
     toggleCart();
 });
 
-document.querySelector('.contact-form').addEventListener('submit', (e) => {
+// 6. Submit Contact Form to Supabase
+document.querySelector('.contact-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Grab the text from the input fields
+    const nameInput = document.getElementById('contact-name').value;
+    const emailInput = document.getElementById('contact-email').value;
+    const messageInput = document.getElementById('contact-message').value;
+    
+    // Change button text while processing
+    const submitBtn = e.target.querySelector('button');
+    const originalText = submitBtn.innerText;
+    submitBtn.innerText = "Sending...";
+    submitBtn.disabled = true;
+
+    // Send the data to the 'contact_messages' table in Supabase
+    const { data, error } = await supabaseClient
+        .from('contact_messages')
+        .insert([
+            { 
+                name: nameInput, 
+                email: emailInput, 
+                message: messageInput 
+            }
+        ]);
+
+    // Reset button
+    submitBtn.innerText = originalText;
+    submitBtn.disabled = false;
+
+    if (error) {
+        console.error('Error saving message:', error);
+        alert("There was an issue sending your message. Please try again.");
+        return;
+    }
+
     alert('Thank you for reaching out to Velvet Beans! We will get back to you soon.');
     e.target.reset(); 
 });
