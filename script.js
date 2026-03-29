@@ -47,7 +47,7 @@ function createProductCard(item) {
                  alt="${item.name}" 
                  onerror="this.src='images/placeholder.jpg'">
             <h4>${item.name}</h4>
-            <p>$${parseFloat(item.price).toFixed(2)}</p>
+            <p>₹${parseFloat(item.price).toFixed(2)}</p>
             <button class="btn" onclick="addToCart(${item.id})">Add to Cart</button>
         </div>
     `;
@@ -83,7 +83,7 @@ function updateCartUI() {
             <div class="cart-item">
                 <div>
                     <h5>${item.name} (x${item.quantity})</h5>
-                    <p>$${(item.price * item.quantity).toFixed(2)}</p>
+                    <p>₹${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
                 <button onclick="removeFromCart(${item.id})" style="color:red; background:none; border:none; cursor:pointer;">Remove</button>
             </div>
