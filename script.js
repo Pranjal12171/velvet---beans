@@ -7,6 +7,9 @@ const SUBAPASE_URL = 'https://myvdmdmyvaznrywvqhiz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15dmRtZG15dmF6bnJ5d3ZxaGl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzQzOTMsImV4cCI6MjA4OTkxMDM5M30.hG2fib_b3KaV4wSnUGp9uTe7k-eP30cFF0o1bfKGIf4';
 const supabaseClient = supabase.createClient(SUBAPASE_URL, SUPABASE_KEY);
 
+// Set the exchange rate (1 USD to INR)
+const EXCHANGE_RATE = 83; 
+
 let cart = [];
 let allProducts = []; 
 
@@ -39,15 +42,16 @@ async function displayMenu() {
     });
 }
 
-// 3. Generate HTML for product cards (Uses local images fallback)
+// 3. Generate HTML for product cards (Mathematically converted to INR)
 function createProductCard(item) {
+    const priceInRupees = item.price * EXCHANGE_RATE;
     return `
         <div class="menu-item">
             <img src="${item.img}" 
                  alt="${item.name}" 
                  onerror="this.src='images/placeholder.jpg'">
             <h4>${item.name}</h4>
-            <p>₹${parseFloat(item.price).toFixed(2)}</p>
+            <p>₹${priceInRupees.toFixed(2)}</p>
             <button class="btn" onclick="addToCart(${item.id})">Add to Cart</button>
         </div>
     `;
@@ -73,17 +77,21 @@ function updateCartUI() {
     const cartTotal = document.getElementById('cart-total');
 
     cartItems.innerHTML = '';
-    let total = 0;
+    let totalInUSD = 0;
     let count = 0;
 
     cart.forEach(item => {
-        total += item.price * item.quantity;
+        totalInUSD += item.price * item.quantity;
         count += item.quantity;
+        
+        // Convert individual item total for display
+        const itemTotalInRupees = item.price * item.quantity * EXCHANGE_RATE;
+        
         cartItems.innerHTML += `
             <div class="cart-item">
                 <div>
                     <h5>${item.name} (x${item.quantity})</h5>
-                    <p>₹${(item.price * item.quantity).toFixed(2)}</p>
+                    <p>₹${itemTotalInRupees.toFixed(2)}</p>
                 </div>
                 <button onclick="removeFromCart(${item.id})" style="color:red; background:none; border:none; cursor:pointer;">Remove</button>
             </div>
@@ -91,7 +99,10 @@ function updateCartUI() {
     });
 
     cartCount.innerText = count;
-    cartTotal.innerText = total.toFixed(2);
+    
+    // Convert the final cart total for display
+    const totalInRupees = totalInUSD * EXCHANGE_RATE;
+    cartTotal.innerText = totalInRupees.toFixed(2);
 }
 
 function removeFromCart(id) {
@@ -115,13 +126,15 @@ document.querySelector('.checkout-btn').addEventListener('click', async () => {
     checkoutBtn.innerText = "Processing...";
     checkoutBtn.disabled = true;
 
-    const orderTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    // Calculate total in USD, then convert to INR for the database record
+    const orderTotalUSD = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const orderTotalInRupees = orderTotalUSD * EXCHANGE_RATE;
 
     const { data, error } = await supabaseClient
         .from('orders')
         .insert([
             { 
-                total_amount: orderTotal, 
+                total_amount: orderTotalInRupees, 
                 items: cart,
                 status: 'pending' 
             }
